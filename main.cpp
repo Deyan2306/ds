@@ -12,7 +12,8 @@ int main(int argc, char* argv[]) {
     po::options_description desc("Allowed options");
     desc.add_options()
         ("help,h", "produce help message")
-        ("path,p", po::value<std::string>()->default_value("."), "path to directory");
+        ("path,p", po::value<std::string>()->default_value("."), "path to directory")
+        ("all,a", "show the hidden files too");
 
     po::variables_map vm;
     po::store(po::parse_command_line(argc, argv, desc), vm);
@@ -31,9 +32,15 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    bool show_all = vm.count("all");
+
     // Iterate the directory
     for (auto & entry : fs::directory_iterator(folder_path)) {
-        std::cout << entry.path().string() << std::endl;
+        std::string filename_path = entry.path().filename().string();
+        if (!show_all && filename_path[0] == '.') {
+            continue;
+        }
+        std::cout << filename_path << std::endl;
     }
 
     return 0;

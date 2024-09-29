@@ -3,3 +3,9 @@ ds: main.cpp
 
 clean:
 	rm -rf ds
+
+install: ds
+	install -Dm755 ds /usr/local/bin/ds
+
+uninstall:
+	rm -f /usr/local/bin/ds

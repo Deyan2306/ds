@@ -9,12 +9,21 @@ namespace fs = boost::filesystem;
 
 int main(int argc, char* argv[]) {
 
-    if (argc <= 1) {
-        std::cerr << "[-] Error: You must provide a folder path!" << std::endl;
-        return 1;
+    po::options_description desc("Allowed options");
+    desc.add_options()
+        ("help,h", "produce help message")
+        ("path,p", po::value<std::string>()->default_value("."), "path to directory");
+
+    po::variables_map vm;
+    po::store(po::parse_command_line(argc, argv, desc), vm);
+    po::notify(vm);
+
+    if (vm.count("help")) {
+        std::cout << desc << std::endl;
+        return 0;
     }
 
-    fs::path folder_path(argv[1]);
+    fs::path folder_path(vm["path"].as<std::string>());
 
     // Check if the directory is a path
     if (!fs::is_directory(folder_path)) {

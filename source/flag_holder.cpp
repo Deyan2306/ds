@@ -15,6 +15,13 @@ void FlagHolder::init(void) {
     po::store(po::parse_command_line(this->argc, this->argv, this->desc), this->vm);
     po::notify(this->vm);
 
+    // @attention
+    // There is no need to keep initializing or running the program after the help command..
+    if (this->contains("help")) {
+        std::cout << this->desc << std::endl;
+        std::exit(0);
+    }
+
     // Set flag values
     this->setFlagValues();
 

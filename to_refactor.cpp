@@ -12,6 +12,7 @@
 #include <string>
 
 #include "header/flag_holder.hpp"
+#include "header/dir_holder.hpp"
 
 namespace fs = boost::filesystem;
 
@@ -71,51 +72,12 @@ void print_file_info(const fs::directory_entry & entry) {
     }
 }
 
-void list_directory_recursive(const fs::path & folder_path) {
-    for (auto& entry : fs::recursive_directory_iterator(folder_path)) {
-        std::cout << entry.path().filename().string() << std::endl;
-    }
-}
-
 int main(int argc, char* argv[]) {
 
     const FlagHolder * holder = FlagHolder::getInstance(argc, argv);
+    const DirHolder * dir = DirHolder::getInstance(holder); 
     
+    dir->listFiles();
 
-    if (holder->contains("help")) {
-        std::cout << holder->getDescription() << std::endl;
-        return 0;
-    }
-
-    fs::path folder_path = holder->getPath();
-
-    // Check if the directory is a path
-    if (!fs::is_directory(folder_path)) {
-        std::cerr << "[-] Error: " << folder_path << " is not a directory." << std::endl;
-        return 1;
-    }
-
-    // Iterate the directory
-    if (holder->getRecursive()) {
-        list_directory_recursive(folder_path);
-    } else {
-        for (auto & entry : fs::directory_iterator(folder_path)) {
-           std::string filename_path = entry.path().filename().string();
-            if (!holder->getShowAll() && filename_path[0] == '.') {
-                continue;
-            }   
-
-            if (holder->getLongInfo()) {
-                print_file_info(entry);
-            } else {
-                if (entry.is_directory()) {
-
-                }
-
-                std::cout << " ⇢ " << filename_path << (entry.is_directory() ? "/ 🗁 " : "") << std::endl;
-            }   
-        }   
-    }
-    
     return 0;
 }

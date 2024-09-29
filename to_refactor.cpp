@@ -1,33 +1,9 @@
 #include <boost/filesystem.hpp>
 
-#include <sys/types.h>
-#include <pwd.h>
-#include <grp.h>
-#include <sys/stat.h>
-
-#include <iomanip>
-
-#include <sstream>
-
-#include <string>
 
 #include "header/flag_holder.hpp"
 #include "header/dir_holder.hpp"
 
-namespace fs = boost::filesystem;
-
-/**
- * `-r` for recursive call
- * `-a` for all
- * `-l` to list all 
- * 
- * ToDo's
- * 1. sorting?
- * 2. human readable formats
- * 3. refactoring...
- * 4. colors! 
- *
-*/
 
 void print_file_info(const fs::directory_entry & entry) {
     struct stat fileStat;
@@ -35,16 +11,7 @@ void print_file_info(const fs::directory_entry & entry) {
     if (stat(entry.path().c_str(), &fileStat) == 0) {
         // Permissions
         std::cout << "[";
-        std::cout << ((S_ISDIR(fileStat.st_mode)) ? "d" : "-");
-        std::cout << ((fileStat.st_mode & S_IRUSR) ? "r" : "-");
-        std::cout << ((fileStat.st_mode & S_IWUSR) ? "w" : "-");
-        std::cout << ((fileStat.st_mode & S_IXUSR) ? "x" : "-");
-        std::cout << ((fileStat.st_mode & S_IRGRP) ? "r" : "-");
-        std::cout << ((fileStat.st_mode & S_IWGRP) ? "w" : "-");
-        std::cout << ((fileStat.st_mode & S_IXGRP) ? "x" : "-");
-        std::cout << ((fileStat.st_mode & S_IROTH) ? "r" : "-");
-        std::cout << ((fileStat.st_mode & S_IWOTH) ? "w" : "-");
-        std::cout << ((fileStat.st_mode & S_IXOTH) ? "x" : "-");
+        
         std::cout << "] ";
 
         // Number of links
@@ -56,6 +23,7 @@ void print_file_info(const fs::directory_entry & entry) {
 
         std::cout << std::setw(8) << (pw ? pw->pw_name : "unknown") << " ";
         std::cout << std::setw(8) << (gr ? gr->gr_name : "unknown") << " ";
+        // ==
 
         // Size (right-aligned)
         std::cout << std::setw(10) << fileStat.st_size << " ";

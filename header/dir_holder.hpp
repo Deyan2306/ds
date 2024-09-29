@@ -1,13 +1,7 @@
 #ifndef _DIR_HOLDER_H_
 #define _DIR_HOLDER_H_
 
-#include <boost/filesystem.hpp>
-
-#include <vector>
-
 #include "flag_holder.hpp"
-
-namespace fs = boost::filesystem;
 
 class DirHolder {
 
@@ -17,7 +11,7 @@ class DirHolder {
 
         // Path
         fs::path folderPath;
-        std::vector<fs::directory_entry> files;
+        std::vector<DirFile> files;
 
         DirHolder() { }
 

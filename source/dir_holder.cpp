@@ -41,12 +41,16 @@ const DirHolder * DirHolder::getInstance(const FlagHolder * holder) {
 
 void DirHolder::listFiles(void) const {
     for (auto & entry : this->files) {
-        std::string file_name = entry.path().filename().string();
+        std::string file_name = entry.name;
 
         if (!this->holder->getShowAll() && file_name[0] == '.') {
             continue;
         }
 
-        std::cout << " ⇢ " << file_name << (entry.is_directory() ? "/ 🗁 " : "") << std::endl;
+        if (this->holder->getLongInfo()) {
+            std::cout << "[" << entry.getPermissionsString() << "]" << entry.fileStat.st_nlink << std::setw(8) << " " << (entry.pw ? entry.pw->pw_name : "unknown") << " " << std::setw(10) << entry.fileStat.st_size << " " << entry.mod_time << " " << file_name << std::endl;;
+        } else {
+            std::cout << " ⇢ " << file_name << (entry.isPath ? "/ 🗁 " : "") << std::endl;
+        }
     }
 }

@@ -1,10 +1,7 @@
 #ifndef _FLAG_HOLDER_H_
 #define _FLAG_HOLDER_H_
 
-#include <boost/program_options.hpp>
-#include <iostream>
-
-namespace po = boost::program_options;
+#include "dir_file.hpp"
 
 class FlagHolder {
 

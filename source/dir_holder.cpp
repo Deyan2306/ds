@@ -48,7 +48,14 @@ void DirHolder::listFiles(void) const {
         }
 
         if (this->holder->getLongInfo()) {
-            std::cout << "[" << entry.getPermissionsString() << "]" << entry.fileStat.st_nlink << std::setw(8) << " " << (entry.pw ? entry.pw->pw_name : "unknown") << " " << std::setw(10) << entry.fileStat.st_size << " " << entry.mod_time << " " << file_name << std::endl;;
+            std::cout << " [" << entry.getPermissionsString() << "] " 
+                << entry.fileStat.st_nlink << std::setw(2) << " " 
+                << (entry.pw ? entry.pw->pw_name : "unknown") << "/" 
+                << (entry.gr ? entry.gr->gr_name : "unknown") << " "
+                << std::setw(10) << entry.fileStat.st_size << " " 
+                << entry.mod_time << " ⇝ " 
+                << file_name << (entry.isPath ? "/ 🗁 " : "") << std::endl;
+
         } else {
             std::cout << " ⇢ " << file_name << (entry.isPath ? "/ 🗁 " : "") << std::endl;
         }

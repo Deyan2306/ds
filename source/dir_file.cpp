@@ -2,10 +2,12 @@
 
 DirFile::DirFile(const fs::directory_entry & _entry) : entry(_entry) {
     this->name = entry.path().filename().string();
-
+    
     if (this->entry.is_directory()) {
         this->isPath = true;
     }
+
+    this->init();
 
 }
 
@@ -17,7 +19,7 @@ void DirFile::init(void) {
         this->gr = getgrgid(fileStat.st_gid);
 
         // Get the modification time
-        this->mod_time = std::ctime(&fileStat.st_size);
+        this->mod_time = std::ctime(&fileStat.st_mtime);
 
         // @attention
         // `mod_time` puts a newline character, so for formatting reasons we replace it with return char

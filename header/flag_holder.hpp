@@ -20,7 +20,9 @@ class FlagHolder {
                 ("all,a", "show the hidden files too")
                 ("long,l", "pring long information about the files")
                 ("recursive,r", "recursive iteration over the folder")
-                ("human_readable,m", "get a human-readable form of the size string");
+                ("human_readable,m", "get a human-readable form of the size string")
+                ("directories_only,d", "display only the directories")
+                ("no_icons,x", "do not display icons for the directories");
         }
 
         // Arguments
@@ -41,6 +43,8 @@ class FlagHolder {
         bool recursive;
 
         bool human_readable;
+        bool directories_only;
+        bool no_icons;
 
         std::string path;
 
@@ -57,7 +61,10 @@ class FlagHolder {
         bool getShowAll(void)   const  { return show_all;  }
         bool getLongInfo(void)  const  { return long_info; }
         bool getRecursive(void) const  { return recursive; }
-        bool getHumanReadable(void) const { return human_readable; }
+        bool getNoIcons(void)   const  { return no_icons;  }
+
+        bool getHumanReadable(void)     const { return human_readable; }
+        bool getDirectoriesOnly(void)   const { return directories_only; }
 
         std::string getPath(void) const { return path;  }
 

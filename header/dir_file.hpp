@@ -7,7 +7,7 @@
 class DirFile {
 
     private:
-        // Reformat the code so it uses some encapsulation
+        bool isPath = false;
 
     public:
         struct stat fileStat;
@@ -17,8 +17,6 @@ class DirFile {
 
         char * mod_time;
 
-        bool isPath = false;
-
         std::string name;
         fs::directory_entry entry;
 
@@ -27,6 +25,9 @@ class DirFile {
 
         // Constructors and Destructors
         DirFile(const fs::directory_entry & _entry);
+
+        // Accessors
+        bool isDirectory(void) const { return this->isPath; }
 
 };
 

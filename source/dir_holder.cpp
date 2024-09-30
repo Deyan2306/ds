@@ -28,6 +28,7 @@ void DirHolder::init(void) {
     this->loadFiles();
 }
 
+// Function that returns the main singleton instance of the current object
 const DirHolder * DirHolder::getInstance(const FlagHolder * holder) {
 
     if (instance == nullptr) {
@@ -44,9 +45,18 @@ void DirHolder::listFiles(void) const {
     for (auto & entry : this->files) {
         std::string file_name = entry.name;
 
-        if (!this->holder->getShowAll() && file_name[0] == '.') {
+        // Handle case for "-x" flag
+        std::string dir_format = this->holder->getNoIcons() 
+            ? "/ " 
+            : "/ 🗁 ";
+
+        // Handle case for "-a" flag
+        if (!this->holder->getShowAll() && file_name[0] == '.')
             continue;
-        }
+
+        // Handle case for "-d" flag
+        if (this->holder->getDirectoriesOnly() && !entry.isDirectory())
+            continue;
 
         if (this->holder->getLongInfo()) {
             std::cout << " [" << entry.getPermissionsString() << "] " 
@@ -56,11 +66,11 @@ void DirHolder::listFiles(void) const {
                 << std::setw( this->holder->getHumanReadable() ? 3 : 10 ) << (this->holder->getHumanReadable() 
                     ? (DirHolder::calculateByteFormat(entry.fileStat.st_size)) 
                     : (std::to_string(entry.fileStat.st_size))) << " "
-                << "\t" << entry.mod_time << " ⇝ " 
-                << file_name << (entry.isPath ? "/ 🗁 " : "") << std::endl;
+                << (this->holder->getHumanReadable() ? "\t" : "") << entry.mod_time << " ⇝ " 
+                << file_name << (entry.isDirectory() ? dir_format : "") << std::endl;
      
         } else {
-            std::cout << " ⇢ " << file_name << (entry.isPath ? "/ 🗁 " : "") << std::endl;
+            std::cout << " ⇢ " << file_name << (entry.isDirectory() ? dir_format : "") << std::endl;
         }
     }
 }

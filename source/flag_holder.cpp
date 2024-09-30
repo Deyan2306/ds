@@ -9,6 +9,8 @@ void FlagHolder::setFlagValues(void) {
     this->long_info = this->contains("long");
     this->recursive = this->contains("recursive");
     this->human_readable = this->contains("human_readable");
+    this->directories_only = this->contains("directories_only");
+    this->no_icons = this->contains("no_icons");
 }
 
 void FlagHolder::init(void) {

@@ -19,7 +19,8 @@ class FlagHolder {
                 ("path,p", po::value<std::string>()->default_value("."), "path to directory")
                 ("all,a", "show the hidden files too")
                 ("long,l", "pring long information about the files")
-                ("recursive,r", "recursive iteration over the folder");
+                ("recursive,r", "recursive iteration over the folder")
+                ("human_readable,m", "get a human-readable form of the size string");
         }
 
         // Arguments
@@ -39,6 +40,8 @@ class FlagHolder {
         bool long_info;
         bool recursive;
 
+        bool human_readable;
+
         std::string path;
 
     public:
@@ -54,6 +57,7 @@ class FlagHolder {
         bool getShowAll(void)   const  { return show_all;  }
         bool getLongInfo(void)  const  { return long_info; }
         bool getRecursive(void) const  { return recursive; }
+        bool getHumanReadable(void) const { return human_readable; }
 
         std::string getPath(void) const { return path;  }
 

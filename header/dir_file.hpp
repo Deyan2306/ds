@@ -3,7 +3,11 @@
 
 #include "imports.hpp"
 
+// TODO: No getters?
 class DirFile {
+
+    private:
+        // Reformat the code so it uses some encapsulation
 
     public:
         struct stat fileStat;
@@ -19,9 +23,9 @@ class DirFile {
         fs::directory_entry entry;
 
         void init(void);
-
         std::string getPermissionsString(void) const;
 
+        // Constructors and Destructors
         DirFile(const fs::directory_entry & _entry);
 
 };

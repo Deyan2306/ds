@@ -18,6 +18,8 @@ class DirHolder {
         void init(void);
         void loadFiles(void);
 
+        static std::string calculateByteFormat(unsigned long long bytes);
+
     public:
         // No need for copy constructor as this class is `Singleton`
         DirHolder(const DirHolder & other) = delete;

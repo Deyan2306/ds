@@ -29,6 +29,7 @@ void DirFile::init(void) {
     }
 }
 
+// @returns string showcasing the user privileges for the current file
 std::string DirFile::getPermissionsString(void) const {
     std::stringstream out;
 

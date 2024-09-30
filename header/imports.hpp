@@ -15,6 +15,7 @@
 #include <sstream>
 #include <string>
 
+#include <cstdlib>
 #include <vector>
 
 namespace fs = boost::filesystem;

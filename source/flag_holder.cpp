@@ -8,6 +8,7 @@ void FlagHolder::setFlagValues(void) {
     this->show_all = this->contains("all");
     this->long_info = this->contains("long");
     this->recursive = this->contains("recursive");
+    this->human_readable = this->contains("human_readable");
 }
 
 void FlagHolder::init(void) {
